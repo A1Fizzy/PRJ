@@ -43,6 +43,7 @@ o3 = Order(3, p3)
 o4 = Order(4, p4)
 o5 = Order(5, p5)
 print(o1, o2, o3, o4, o5, sep='\n')
+print('\n')
 
 class Courier:
     def __init__(self, name, cordsC, speed):
@@ -59,4 +60,4 @@ c3 = Courier('Jessi ', pc3, 10)
 c4 = Courier('Hank ', pc4, 10)
 c5 = Courier('Brandon ', pc5, 10)
 
-print('\n', c1, c2, c3, c4, c5, sep='\n')
+print(c1, c2, c3, c4, c5, sep='\n')
