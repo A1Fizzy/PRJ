@@ -1,4 +1,4 @@
-
+import math
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -7,7 +7,7 @@ class Point:
     def __str__(self):
         return f'({self.x}, {self.y})'
 
-    """
+
     def get_distance(self, other_point):
         x1 = self.x
         x2 = other_point.x
@@ -16,8 +16,6 @@ class Point:
         dist = math.sqrt((x1-x2) ** 2 + (y1-y2) ** 2)
         return dist
 
-#dist = p1.get_distance(p2)
-"""
 p1 = Point(1, 2)
 p2 = Point(10, 6)
 p3 = Point(3, 5)
@@ -50,6 +48,7 @@ class Courier:
         self.name = name
         self.cordsC = cordsC
         self.speed = speed
+        self.distance = 0
 
     def __str__(self):
         return f'Курьер {self.name}с координатами {self.cordsC} имеет скорость {self.speed}'
@@ -61,3 +60,33 @@ c4 = Courier('Hank ', pc4, 10)
 c5 = Courier('Brandon ', pc5, 10)
 
 print(c1, c2, c3, c4, c5, sep='\n')
+
+couriers = []
+couriers.append(c1)
+couriers.append(c2)
+couriers.append(c3)
+couriers.append(c4)
+couriers.append(c5)
+
+orders = []
+orders.append(o1)
+orders.append(o2)
+orders.append(o3)
+orders.append(o4)
+orders.append(o5)
+
+print("\n")
+for order_number in range(len(orders)):
+
+    distances = []
+    for courier_number in range(len(couriers)):
+        distances.append(orders[order_number].cords.get_distance(couriers[courier_number].cordsC))
+        couriers[courier_number].distance = orders[order_number].cords.get_distance(couriers[courier_number].cordsC)
+
+    for i in range(len(couriers)):
+        print(distances[i])
+
+    for courier_number in range(len(couriers)):
+        if couriers[courier_number].distance == min(distances):
+            print(f"Заказ {orders[order_number].number} доставит курьер {couriers[courier_number].name}")
+
