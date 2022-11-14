@@ -16,13 +16,13 @@ class Point:
         dist = math.sqrt((x1-x2) ** 2 + (y1-y2) ** 2)
         return dist
 
-p1 = Point(1, 2)
-p2 = Point(10, 6)
+p1 = Point(5, 0)
+p2 = Point(6, 0)
 p3 = Point(3, 5)
 p4 = Point(0, 4)
 p5 = Point(2, 5)
-pc1 = Point(4, 0)
-pc2 = Point(9, 3)
+pc1 = Point(5, 1)
+pc2 = Point(4, 0)
 pc3 = Point(3, 9)
 pc4 = Point(2, 2)
 pc5 = Point(8, 8)
@@ -51,15 +51,32 @@ class Courier:
         self.distance = 0
 
     def __str__(self):
-        return f'Курьер {self.name}с координатами {self.cordsC} имеет скорость {self.speed}'
+        return f'{self.name}с координатами {self.cordsC} имеет скорость {self.speed}'
 
-c1 = Courier('Walt ', pc1, 10)
-c2 = Courier('Flin ', pc2, 10)
-c3 = Courier('Jessi ', pc3, 10)
-c4 = Courier('Hank ', pc4, 10)
-c5 = Courier('Brandon ', pc5, 10)
+c1 = Courier('Курьер 1 ', pc1, 10)
+c2 = Courier('Курьер 2 ', pc2, 10)
+c3 = Courier('Курьер 3 ', pc3, 10)
+c4 = Courier('Курьер 4 ', pc4, 10)
+c5 = Courier('Курьер 5 ', pc5, 10)
 
 print(c1, c2, c3, c4, c5, sep='\n')
+
+plan = {'Курьер 1' : [Order('A', p1), Order('B', p2)], 'Курьер 2' : [Order('C', p3), Order('B', p4)] }
+
+def get_full_path(plan, couriers):
+    full_path = 0
+    for courier in couriers:
+        name = courier.name
+        if name not in plan:
+            continue
+        for number, order in enumerate(pnal[name]):
+            full_path =+ order.point.get_distance_to_center()
+
+            if number == 0:
+                full_path += courier.point.get_distance_to_other(order.point)
+            else:
+                full_path += order.point.get_distance_to_center()
+    return full_path
 
 couriers = []
 couriers.append(c1)
@@ -83,8 +100,8 @@ for order_number in range(len(orders)):
         distances.append(orders[order_number].cords.get_distance(couriers[courier_number].cordsC))
         couriers[courier_number].distance = orders[order_number].cords.get_distance(couriers[courier_number].cordsC)
 
-    for i in range(len(couriers)):
-        print(distances[i])
+    #for i in range(len(couriers)):
+        #print(distances[i])
 
     for courier_number in range(len(couriers)):
         if couriers[courier_number].distance == min(distances):
