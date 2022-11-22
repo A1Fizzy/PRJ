@@ -16,6 +16,12 @@ class Point:
         dist = math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
         return dist
 
+    def get_distance_to_center(self):
+        x = self.x
+        y = self.y
+        R = math.sqrt(x**2 + y**2)
+        return R
+
 
 f = open('points.txt', 'r')
 
@@ -108,20 +114,20 @@ class Courier:
         self.distance = 0
 
     def __str__(self):
-        return f'{self.name}с координатами {self.cordsC} имеет скорость {self.speed * 1000} км/ч и грузоподъёмность {self.load} кг'
+        return f'{self.name}с координатами {self.cordsC} имеет скорость {self.speed} км/ч и грузоподъёмность {self.load} кг'
 
 
-c1 = Courier('Курьер 1, пеший ', pc1, 0.006, 2)
-c2 = Courier('Курьер 2, пеший ', pc2, 0.006, 2)
-c3 = Courier('Курьер 3, на велосипеде ', pc3, 0.012, 4)
-c4 = Courier('Курьер 4, на велосипеде ', pc4, 0.012, 4)
-c5 = Courier('Курьер 5, на автомобиле ', pc5, 0.06, 50)
+c1 = Courier('Курьер 1 (пеший)', pc1, 6, 2)
+c2 = Courier('Курьер 2 (пеший)', pc2, 6, 2)
+c3 = Courier('Курьер 3 (на велосипеде)', pc3, 12, 4)
+c4 = Courier('Курьер 4 (на велосипеде)', pc4, 12, 4)
+c5 = Courier('Курьер 5 (на автомобиле)', pc5, 60, 50)
 
 print(c1, c2, c3, c4, c5, sep='\n')
 
 plan = {'Курьер 1': [Order('A', p1, 2), Order('B', p2, 3)], 'Курьер 2': [Order('C', p3, 1), Order('D', p4, 6)]}
 
-
+"""
 def get_full_path(plan, couriers):
     full_path = 0
     for courier in couriers:
@@ -135,8 +141,7 @@ def get_full_path(plan, couriers):
                 full_path += courier.point.get_distance_to_other(order.point)
             else:
                 full_path += order.point.get_distance_to_center()
-    return full_path
-
+"""
 
 couriers = []
 couriers.append(c1)
@@ -154,7 +159,6 @@ orders.append(o5)
 
 print("\n")
 
-#for order_number in range(len(orders)):
 distances = []
 for courier_number in range(len(couriers)):
     distances.append(orders[0].cords.get_distance(couriers[courier_number].cordsC))
@@ -165,8 +169,10 @@ for courier_number in range(len(couriers)):
             distances.remove(min(distances))
         elif couriers[courier_number].distance == min(distances) and couriers[courier_number].load >= orders[0].weight:
             break
-print(f"Заказ {orders[0].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
 couriers[courier_number].cordsC = orders[0].cords
+full_path = orders[0].cords.get_distance_to_center() + couriers[courier_number].distance
+time = full_path / couriers[courier_number].speed
+print(f"Заказ {orders[0].number} заберёт {couriers[courier_number].name}, доставит в течение {time} часов, расстояние {full_path} км")
 
 distances2 = []
 for courier_number in range(len(couriers)):
@@ -178,8 +184,10 @@ for courier_number in range(len(couriers)):
             distances2.remove(min(distances2))
         elif couriers[courier_number].distance == min(distances2) and couriers[courier_number].load >= orders[1].weight:
             break
-print(f"Заказ {orders[1].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
 couriers[courier_number].cordsC = orders[1].cords
+full_path2 = orders[1].cords.get_distance_to_center() + couriers[courier_number].distance
+time2 = full_path2 / couriers[courier_number].speed
+print(f"Заказ {orders[1].number} заберёт {couriers[courier_number].name}, доставит в течение {time2} часов, расстояние {full_path2} км")
 
 distances3 = []
 for courier_number in range(len(couriers)):
@@ -191,8 +199,10 @@ for courier_number in range(len(couriers)):
             distances3.remove(min(distances3))
         elif couriers[courier_number].distance == min(distances3) and couriers[courier_number].load >= orders[2].weight:
             break
-print(f"Заказ {orders[2].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
 couriers[courier_number].cordsC = orders[2].cords
+full_path3 = orders[2].cords.get_distance_to_center() + couriers[courier_number].distance
+time3 = full_path3 / couriers[courier_number].speed
+print(f"Заказ {orders[2].number} заберёт {couriers[courier_number].name}, доставит в течение {time3} часов, расстояние {full_path3} км")
 
 distances4 = []
 for courier_number in range(len(couriers)):
@@ -204,8 +214,10 @@ for courier_number in range(len(couriers)):
             distances4.remove(min(distances4))
         elif couriers[courier_number].distance == min(distances4) and couriers[courier_number].load >= orders[3].weight:
             break
-print(f"Заказ {orders[3].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
 couriers[courier_number].cordsC = orders[3].cords
+full_path4 = orders[3].cords.get_distance_to_center() + couriers[courier_number].distance
+time4 = full_path4 / couriers[courier_number].speed
+print(f"Заказ {orders[3].number} заберёт {couriers[courier_number].name}, доставит в течение {time4} часов, расстояние {full_path4} км")
 
 distances5 = []
 for courier_number in range(len(couriers)):
@@ -217,6 +229,8 @@ for courier_number in range(len(couriers)):
             distances5.remove(min(distances5))
         elif couriers[courier_number].distance == min(distances5) and couriers[courier_number].load >= orders[4].weight:
             break
-print(f"Заказ {orders[4].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
 couriers[courier_number].cordsC = orders[4].cords
+full_path5 = orders[4].cords.get_distance_to_center() + couriers[courier_number].distance
+time5 = full_path5 / couriers[courier_number].speed
+print(f"Заказ {orders[4].number} заберёт {couriers[courier_number].name}, доставит в течение {time5} часов, расстояние {full_path5} км")
 
