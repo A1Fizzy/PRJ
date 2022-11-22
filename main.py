@@ -1,6 +1,5 @@
 import math
 
-
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -82,43 +81,45 @@ pc5 = Point(int(s), int(s1))
 
 
 class Order:
-    def __init__(self, number, cords):
+    def __init__(self, number, cords, weight):
         self.number = number
         self.cords = cords
+        self.weight = weight
 
     def __str__(self):
-        return f'Заказ {self.number}, с координатами {self.cords}'
+        return f'Заказ {self.number}, с координатами {self.cords} весит {self.weight} кг'
 
 
-o1 = Order(1, p1)
-o2 = Order(2, p2)
-o3 = Order(3, p3)
-o4 = Order(4, p4)
-o5 = Order(5, p5)
+o1 = Order(1, p1, 2)
+o2 = Order(2, p2, 3)
+o3 = Order(3, p3, 1)
+o4 = Order(4, p4, 6)
+o5 = Order(5, p5, 9)
 print(o1, o2, o3, o4, o5, sep='\n')
 print('\n')
 
 
 class Courier:
-    def __init__(self, name, cordsC, speed):
+    def __init__(self, name, cordsC, speed, load):
         self.name = name
         self.cordsC = cordsC
         self.speed = speed
+        self.load = load
         self.distance = 0
 
     def __str__(self):
-        return f'{self.name}с координатами {self.cordsC} имеет скорость {self.speed}'
+        return f'{self.name}с координатами {self.cordsC} имеет скорость {self.speed * 1000} км/ч и грузоподъёмность {self.load} кг'
 
 
-c1 = Courier('Курьер 1 ', pc1, 10)
-c2 = Courier('Курьер 2 ', pc2, 10)
-c3 = Courier('Курьер 3 ', pc3, 10)
-c4 = Courier('Курьер 4 ', pc4, 10)
-c5 = Courier('Курьер 5 ', pc5, 10)
+c1 = Courier('Курьер 1, пеший ', pc1, 0.006, 2)
+c2 = Courier('Курьер 2, пеший ', pc2, 0.006, 2)
+c3 = Courier('Курьер 3, на велосипеде ', pc3, 0.012, 4)
+c4 = Courier('Курьер 4, на велосипеде ', pc4, 0.012, 4)
+c5 = Courier('Курьер 5, на автомобиле ', pc5, 0.06, 50)
 
 print(c1, c2, c3, c4, c5, sep='\n')
 
-plan = {'Курьер 1': [Order('A', p1), Order('B', p2)], 'Курьер 2': [Order('C', p3), Order('B', p4)]}
+plan = {'Курьер 1': [Order('A', p1, 2), Order('B', p2, 3)], 'Курьер 2': [Order('C', p3, 1), Order('D', p4, 6)]}
 
 
 def get_full_path(plan, couriers):
@@ -128,7 +129,7 @@ def get_full_path(plan, couriers):
         if name not in plan:
             continue
         for number, order in enumerate(plan[name]):
-            full_path = + order.point.get_distance_to_center()
+            full_path += order.point.get_distance_to_center()
 
             if number == 0:
                 full_path += courier.point.get_distance_to_other(order.point)
@@ -152,13 +153,70 @@ orders.append(o4)
 orders.append(o5)
 
 print("\n")
-for order_number in range(len(orders)):
 
-    distances = []
+#for order_number in range(len(orders)):
+distances = []
+for courier_number in range(len(couriers)):
+    distances.append(orders[0].cords.get_distance(couriers[courier_number].cordsC))
+    couriers[courier_number].distance = orders[0].cords.get_distance(couriers[courier_number].cordsC)
+for courier_number in range(len(couriers)):
     for courier_number in range(len(couriers)):
-        distances.append(orders[order_number].cords.get_distance(couriers[courier_number].cordsC))
-        couriers[courier_number].distance = orders[order_number].cords.get_distance(couriers[courier_number].cordsC)
+        if couriers[courier_number].distance == min(distances) and couriers[courier_number].load < orders[0].weight:
+            distances.remove(min(distances))
+        elif couriers[courier_number].distance == min(distances) and couriers[courier_number].load >= orders[0].weight:
+            break
+print(f"Заказ {orders[0].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
+couriers[courier_number].cordsC = orders[0].cords
 
+distances2 = []
+for courier_number in range(len(couriers)):
+    distances2.append(orders[1].cords.get_distance(couriers[courier_number].cordsC))
+    couriers[courier_number].distance = orders[1].cords.get_distance(couriers[courier_number].cordsC)
+for courier_number in range(len(couriers)):
     for courier_number in range(len(couriers)):
-        if couriers[courier_number].distance == min(distances):
-            print(f"Заказ {orders[order_number].number} доставит курьер {couriers[courier_number].name}")
+        if couriers[courier_number].distance == min(distances2) and couriers[courier_number].load < orders[1].weight:
+            distances2.remove(min(distances2))
+        elif couriers[courier_number].distance == min(distances2) and couriers[courier_number].load >= orders[1].weight:
+            break
+print(f"Заказ {orders[1].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
+couriers[courier_number].cordsC = orders[1].cords
+
+distances3 = []
+for courier_number in range(len(couriers)):
+    distances3.append(orders[2].cords.get_distance(couriers[courier_number].cordsC))
+    couriers[courier_number].distance = orders[2].cords.get_distance(couriers[courier_number].cordsC)
+for courier_number in range(len(couriers)):
+    for courier_number in range(len(couriers)):
+        if couriers[courier_number].distance == min(distances3) and couriers[courier_number].load < orders[2].weight:
+            distances3.remove(min(distances3))
+        elif couriers[courier_number].distance == min(distances3) and couriers[courier_number].load >= orders[2].weight:
+            break
+print(f"Заказ {orders[2].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
+couriers[courier_number].cordsC = orders[2].cords
+
+distances4 = []
+for courier_number in range(len(couriers)):
+    distances4.append(orders[3].cords.get_distance(couriers[courier_number].cordsC))
+    couriers[courier_number].distance = orders[3].cords.get_distance(couriers[courier_number].cordsC)
+for courier_number in range(len(couriers)):
+    for courier_number in range(len(couriers)):
+        if couriers[courier_number].distance == min(distances4) and couriers[courier_number].load < orders[3].weight:
+            distances4.remove(min(distances4))
+        elif couriers[courier_number].distance == min(distances4) and couriers[courier_number].load >= orders[3].weight:
+            break
+print(f"Заказ {orders[3].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
+couriers[courier_number].cordsC = orders[3].cords
+
+distances5 = []
+for courier_number in range(len(couriers)):
+    distances5.append(orders[4].cords.get_distance(couriers[courier_number].cordsC))
+    couriers[courier_number].distance = orders[4].cords.get_distance(couriers[courier_number].cordsC)
+for courier_number in range(len(couriers)):
+    for courier_number in range(len(couriers)):
+        if couriers[courier_number].distance == min(distances5) and couriers[courier_number].load < orders[4].weight:
+            distances5.remove(min(distances5))
+        elif couriers[courier_number].distance == min(distances5) and couriers[courier_number].load >= orders[4].weight:
+            break
+print(f"Заказ {orders[4].number} заберёт {couriers[courier_number].name}, расстояние {couriers[courier_number].distance}")
+couriers[courier_number].cordsC = orders[4].cords
+
