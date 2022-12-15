@@ -205,9 +205,9 @@ class Image:
     def __str__(self):
         return f'время начала: {self.time_start} \nвремя финиша: {self.time_finish} \nот {self.point_from} \nдо {self.point_to}'
 
-"""
+
 courier_list = Record(couriers[courier_number].name, orders[order_number].number, couriers[courier_number].cordsC, orders[order_number].cords, 0, 10)
 print(courier_list)
-
+"""
 
 
