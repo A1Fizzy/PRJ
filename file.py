@@ -25,7 +25,7 @@ word = new_list[random_index]
 word_c = "\033[32m{}\033[0m".format(word)
 word_l = list(word)
 #print(new_list)
-print(word)
+#print(word)
 
 while True:
     user_word = input("\n Введите слово из 5 букв: \n")
@@ -72,27 +72,3 @@ while True:
             continue
     else:
         print('Этого слова нет в списке загадываемых слов(')
-"""
-            if user_word_l[0] == word_l[1] or user_word_l[0] == word_l[2] or user_word_l[0] == word_l[3] or user_word_l[0] == word_l[4]:
-                print(f'Буква "{user_word_l[0]}" есть в загаданном слове!')
-            if user_word_l[1] == word_l[0] or user_word_l[1] == word_l[2] or user_word_l[1] == word_l[3] or user_word_l[1] == word_l[4]:
-                print(f'Буква "{user_word_l[1]}" есть в загаданном слове!')
-            if user_word_l[2] == word_l[1] or user_word_l[2] == word_l[0] or user_word_l[2] == word_l[3] or user_word_l[2] == word_l[4]:
-                print(f'Буква "{user_word_l[2]}" есть в загаданном слове!')
-            if user_word_l[3] == word_l[1] or user_word_l[3] == word_l[2] or user_word_l[3] == word_l[0] or user_word_l[3] == word_l[4]:
-                print(f'Буква "{user_word_l[3]}" есть в загаданном слове!')
-            if user_word_l[4] == word_l[1] or user_word_l[4] == word_l[2] or user_word_l[4] == word_l[3] or user_word_l[4] == word_l[0]:
-                print(f'Буква "{user_word_l[4]}" есть в загаданном слове!')
-
-            if user_word_l[0] == word_l[0]:
-                print("Первая буква совпадает!")
-            if user_word_l[1] == word_l[1]:
-                print("Вторая буква совпадает!")
-            if user_word_l[2] == word_l[2]:
-                print("Третья буква совпадает!")
-            if user_word_l[3] == word_l[3]:
-                print("Четвёртая буква совпадает!")
-            if user_word_l[4] == word_l[4]:
-                print("Пятая буква совпадает!")
-                continue
-"""
